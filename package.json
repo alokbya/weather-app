@@ -1,0 +1,23 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "A simple weather app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alokbya/weather-app.git"
+  },
+  "author": "Alaaddin Hiefield",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alokbya/weather-app/issues"
+  },
+  "homepage": "https://github.com/alokbya/weather-app#readme",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "request": "^2.88.0"
+  }
+}

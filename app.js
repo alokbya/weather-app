@@ -1,9 +1,16 @@
-const request = require('request');
-const fs = require('fs');
-const keys = require('dotenv').config();  // Get environment variables (API Key)
-const api_key = process.env.API_KEY;      // fetch stored API key for google maps
-const yargs = require('yargs');           // load in yargs
 
+// Required modules for app.js
+const fs = require('fs');
+const keys = require('dotenv').config();            // Get environment variables (API Key)
+const yargs = require('yargs');                     // load in yargs
+const geocode = require('./geocode/geocode.js')     // can omit '.js' from file bc this file is also .js
+const weather = require('./weather/weather')        // weather
+
+
+// API Keys
+const weather_key = process.env.WEATHER_KEY;
+
+// Command line arguments with Yargs
 const argv = yargs
     .options({
         a: {
@@ -17,24 +24,24 @@ const argv = yargs
 .alias('help', 'h')
 .argv;
 
-console.log(argv.a);
-let address = encodeURIComponent(argv.a);
+// Write the user-inputted address to the console
+console.log(argv.address);
 
+// Fetch geocode data with geocode function
+// needs api key to work with google maps api
+// geocode.geocodeAddress(argv.a, (errorMessage, results) => {
+//     if (errorMessage) {
+//         console.log(errorMessage);
+//     } else {
+//         console.log(JSON.stringify(results, undefined, 2))
+//     }
+// });
 
-//Called once data comes back from http endpoint (HTTP request)
-request({
-    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${api_key}`,
-    json: true
-}, (error, response, body) => {
-    if (body.status === 'ZERO_RESULTS') {
-        // run this block if an error exists
-        console.log('Unable to find the given address.');
-    } else if (body.status === 'OK') {
-        console.log(`Address: ${body.results[0].formatted_address}`);
-        console.log(`Latitude: ${body.results[0].geometry.location.lat}`);
-        console.log(`Longitude: ${body.results[0].geometry.location.lng}`)
+// Encode the address as a URI component (works for googles api)
+weather.getWeather(lat, long, (errorMessage, results) => {
+    if (errorMessage) {
+        console.log(errorMessage);
     } else {
-        console.log("Unable to connect to Google Servers.");
+        console.log(JSON.stringify(results, undefined, 2))
     }
-    
 });

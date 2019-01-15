@@ -25,23 +25,23 @@ const argv = yargs
 .argv;
 
 // Write the user-inputted address to the console
-console.log(argv.address);
+// console.log(argv.address);
 
 // Fetch geocode data with geocode function
 // needs api key to work with google maps api
-// geocode.geocodeAddress(argv.a, (errorMessage, results) => {
-//     if (errorMessage) {
-//         console.log(errorMessage);
-//     } else {
-//         console.log(JSON.stringify(results, undefined, 2))
-//     }
-// });
-
-// Encode the address as a URI component (works for googles api)
-weather.getWeather(lat, long, (errorMessage, results) => {
+geocode.geocodeAddress(argv.a, (errorMessage, results) => {
     if (errorMessage) {
         console.log(errorMessage);
     } else {
-        console.log(JSON.stringify(results, undefined, 2))
+        console.log(results.address)
+        weather.getWeather(results.latitude, results.longitude, (errorMessage, weatherResults) => {
+            if (errorMessage) {
+                console.log(errorMessage);
+            } else {
+                console.log(`It's currently ${weatherResults.temperature}. It feels like ${weatherResults.apparentTemperature}.`)
+            }
+        });
     }
 });
+
+// Encode the address as a URI component (works for googles api)

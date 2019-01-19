@@ -16,7 +16,8 @@ asyncAdd(5,7).then((result) => {
 }).then((result) => {
 	console.log('Should be 45: ', result);
 }).catch((errorMessage) => {				// use catch to catch all rejects
-	console.log(errorMessage);
+	console.log(errorMessage);				// handles all previous failures
+	
 });
 // var somePromise = new Promise((resolve, reject) => {
 // 	setTimeout(() => {

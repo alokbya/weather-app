@@ -1,11 +1,11 @@
 const request = require('request');
 const api_key = process.env.MAP_KEY;  
 
-var geocodeAddress = (address) => {
+var geocodeAddress = (address, api_key) => {
 	return new Promise((resolve, reject) => {
 	request({
-	    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${api_key}`,
-	    json: true																	// return in JSON
+	    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.MAP_KEY}`,
+	    json: true,
 	}, (error, response, body) => {
 	    // If the program gets a zero-results response from the api
 	    if (body.status === 'ZERO_RESULTS') {
@@ -27,7 +27,7 @@ var geocodeAddress = (address) => {
 	});
 }
 
-geocodeAddress('97330').then((location) => {
+geocodeAddress('97330', api_key).then((location) => {
 	console.log(JSON.stringify(location, undefined, 2));
 }, (errorMessage) => {
 	console.log(errorMessage);
